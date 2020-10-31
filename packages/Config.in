@@ -1,0 +1,6 @@
+menu "Target packages"
+
+source "$BR2_EXTERNAL_SPEEDSAVER_PATH/packages/navit/Config.in"
+source "$BR2_EXTERNAL_SPEEDSAVER_PATH/packages/ssd1306/Config.in"
+
+endmenu

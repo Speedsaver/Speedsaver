@@ -1,0 +1,13 @@
+diff --git a/include/watchdog.h b/include/watchdog.h
+index ee6e60240f..29061256bc 100644
+--- a/include/watchdog.h
++++ b/include/watchdog.h
+@@ -35,7 +35,7 @@ int init_func_watchdog_reset(void);
+ /*
+  * Hardware watchdog
+  */
+-#ifdef CONFIG_HW_WATCHDOG
++#if defined(CONFIG_HW_WATCHDOG) && !defined(CONFIG_SPL_BUILD)
+ 	#if defined(__ASSEMBLY__)
+ 		#define WATCHDOG_RESET bl hw_watchdog_reset
+ 	#else

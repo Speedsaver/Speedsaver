@@ -1,0 +1,178 @@
+From 7e920062c62fec43eaeb522439277f7d0c3bfb4b Mon Sep 17 00:00:00 2001
+From: Xogium <contact@xogium.me>
+Date: Thu, 29 Oct 2020 12:52:22 -0400
+Subject: [PATCH] Add sunxi watchdog support.
+
+This is based off an old patch from 2018 which u-boot rejected due to it not respecting their driver model.
+---
+ common/board_f.c             |   3 +-
+ drivers/watchdog/Kconfig     |  18 ++++++
+ drivers/watchdog/Makefile    |   1 +
+ drivers/watchdog/sunxi_wdt.c | 103 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 124 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/watchdog/sunxi_wdt.c
+
+diff --git a/common/board_f.c b/common/board_f.c
+index d3444c7edc..9890ab310c 100644
+--- a/common/board_f.c
++++ b/common/board_f.c
+@@ -106,7 +106,8 @@ static int init_func_watchdog_init(void)
+ 	(defined(CONFIG_M68K) || defined(CONFIG_MICROBLAZE) || \
+ 	defined(CONFIG_SH) || \
+ 	defined(CONFIG_DESIGNWARE_WATCHDOG) || \
+-	defined(CONFIG_IMX_WATCHDOG))
++	defined(CONFIG_IMX_WATCHDOG) || \
++	defined(CONFIG_SUNXI_WDT))
+ 	hw_watchdog_init();
+ 	puts("       Watchdog enabled\n");
+ # endif
+diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
+index 210d9f8093..f5f9830add 100644
+--- a/drivers/watchdog/Kconfig
++++ b/drivers/watchdog/Kconfig
+@@ -34,6 +34,24 @@ config IMX_WATCHDOG
+ 	  Select this to enable the IMX and LSCH2 of Layerscape watchdog
+ 	  driver.
+ 
++config SUNXI_WDT
++	bool "SUNXI watchdog timer support"
++	select HW_WATCHDOG
++	help
++	   Select this to enable the SUNXI watchdog timer.
++
++if SUNXI_WDT
++
++config SUNXI_WDT_TIMEOUT
++	int "SUNXI watchdog timeout setting"
++	default 10
++	range 1 16
++	depends on SUNXI_WDT
++	help
++	  Adjust the timeout window for the SUNXI watchdog timer.
++
++endif
++
+ config OMAP_WATCHDOG
+ 	bool "TI OMAP watchdog driver"
+ 	depends on ARCH_OMAP2PLUS
+diff --git a/drivers/watchdog/Makefile b/drivers/watchdog/Makefile
+index 01b8231f2b..ae8dabaa58 100644
+--- a/drivers/watchdog/Makefile
++++ b/drivers/watchdog/Makefile
+@@ -34,3 +34,4 @@ obj-$(CONFIG_WDT_SP805) += sp805_wdt.o
+ obj-$(CONFIG_WDT_STM32MP) += stm32mp_wdt.o
+ obj-$(CONFIG_WDT_TANGIER) += tangier_wdt.o
+ obj-$(CONFIG_WDT_XILINX) += xilinx_wwdt.o
++obj-$(CONFIG_SUNXI_WDT) += sunxi_wdt.o
+diff --git a/drivers/watchdog/sunxi_wdt.c b/drivers/watchdog/sunxi_wdt.c
+new file mode 100644
+index 0000000000..9d88b86ba4
+--- /dev/null
++++ b/drivers/watchdog/sunxi_wdt.c
+@@ -0,0 +1,103 @@
++/*
++ * (C) Copyright 2018 Chris Blake <chrisrblake93 at gmail.com>
++ * Roughly based on the mainline linux driver, sunxi_wdt.c
++ *
++ * This file is licensed under the terms of the GNU General Public
++ * License version 2.  This program is licensed "as is" without
++ * any warranty of any kind, whether express or implied.
++ */
++
++#include <common.h>
++#include <watchdog.h>
++#include <asm/arch/timer.h>
++#include <asm/io.h>
++
++#define WDT_CTRL_RESTART	(0x1 << 0)
++#define WDT_CTRL_KEY		(0x0a57 << 1)
++#define WDT_MODE_EN		(0x1 << 0)
++#define WDT_TIMEOUT_MASK	(0xf)
++
++struct sunxi_wdt_reg {
++	u32 wdt_ctrl;
++	u32 wdt_cfg;
++	u32 wdt_mode;
++	u32 wdt_timeout_shift;
++	u32 wdt_reset_mask;
++	u32 wdt_reset_val;
++};
++
++static const struct sunxi_wdt_reg sun4i_wdt_reg = {
++	.wdt_ctrl = 0x00,
++	.wdt_cfg = 0x04,
++	.wdt_mode = 0x04,
++	.wdt_timeout_shift = 3,
++	.wdt_reset_mask = 0x02,
++	.wdt_reset_val = 0x02,
++};
++
++static const struct sunxi_wdt_reg sun6i_dog_regs = {
++	.wdt_ctrl = 0x10,
++	.wdt_cfg = 0x14,
++	.wdt_mode = 0x18,
++	.wdt_timeout_shift = 4,
++	.wdt_reset_mask = 0x03,
++	.wdt_reset_val = 0x01,
++};
++
++static const int wdt_timeout_map[] = {
++	[1] = 0x1,  /* 1s  */
++	[2] = 0x2,  /* 2s  */
++	[3] = 0x3,  /* 3s  */
++	[4] = 0x4,  /* 4s  */
++	[5] = 0x5,  /* 5s  */
++	[6] = 0x6,  /* 6s  */
++	[8] = 0x7,  /* 8s  */
++	[10] = 0x8, /* 10s */
++	[12] = 0x9, /* 12s */
++	[14] = 0xA, /* 14s */
++	[16] = 0xB, /* 16s */
++};
++
++#if defined(CONFIG_SUNXI_GEN_SUN6I)
++static const struct sunxi_wdt_reg *regs = &sun6i_dog_regs;
++#else
++static const struct sunxi_wdt_reg *regs = &sun4i_dog_regs;
++#endif
++
++static void *wdt_base = &((struct sunxi_timer_reg *)SUNXI_TIMER_BASE)->wdog;
++
++void hw_watchdog_reset(void)
++{
++	/* reload the watchdog */
++	writel(WDT_CTRL_KEY | WDT_CTRL_RESTART, wdt_base + regs->wdt_ctrl);
++}
++
++void hw_watchdog_disable(void)
++{
++	/* Reset WDT Config */
++	writel(0, wdt_base + regs->wdt_mode);
++}
++
++void hw_watchdog_init(void)
++{
++	const u32 timeout = CONFIG_SUNXI_WDT_TIMEOUT;
++	u32 reg;
++
++	reg = readl(wdt_base + regs->wdt_mode);
++	reg &= ~(WDT_TIMEOUT_MASK << regs->wdt_timeout_shift);
++	reg |= wdt_timeout_map[timeout] << regs->wdt_timeout_shift;
++	writel(reg, wdt_base + regs->wdt_mode);
++
++	hw_watchdog_reset();
++
++	/* Set system reset function */
++	reg = readl(wdt_base + regs->wdt_cfg);
++	reg &= ~(regs->wdt_reset_mask);
++	reg |= regs->wdt_reset_val;
++	writel(reg, wdt_base + regs->wdt_cfg);
++
++	/* Enable watchdog */
++	reg = readl(wdt_base + regs->wdt_mode);
++	reg |= WDT_MODE_EN;
++	writel(reg, wdt_base + regs->wdt_mode);
++ }
+-- 
+2.29.0
+
