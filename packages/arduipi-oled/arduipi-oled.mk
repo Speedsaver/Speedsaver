@@ -4,19 +4,18 @@
 #
 ################################################################################
 
-ARDUIPI_OLED_VERSION = 4119148b051a6975816de2319eb6d11f6769499d
-ARDUIPI_OLED_SITE = $(call github,hallard,ArduiPi_OLED,$(ARDUIPI_OLED_VERSION))
+ARDUIPI_OLED_VERSION = 20dd673e4ff37a56e155b9e5f77e2aae79f9d11d
+ARDUIPI_OLED_SITE = $(call github,Jookia,ArduiPi_OLED,$(ARDUIPI_OLED_VERSION))
+ARDUIPI_OLED_DEPENDENCIES = i2c-tools
 
 define ARDUIPI_OLED_BUILD_CMDS
-	echo "BananaPI" > $(@D)/hwplatform
 	$(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(@D)
-	echo "BananaPI" > $(@D)/examples/hwplatform
 	$(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(@D)/examples
 endef
 
 define ARDUIPI_OLED_INSTALL_TARGET_CMDS
-	$(INSTALL) -d -m 0755 $(@D)/examples/oled_demo \
-		$(TARGET_DIR)/usr/bin/oled_demo
+	$(TARGET_MAKE_ENV) $(MAKE) install PREFIX=/usr DESTDIR=$(TARGET_DIR) -C $(@D)
+	$(TARGET_MAKE_ENV) $(MAKE) install PREFIX=/usr DESTDIR=$(TARGET_DIR) -C $(@D)/examples
 endef
 
 $(eval $(generic-package))
