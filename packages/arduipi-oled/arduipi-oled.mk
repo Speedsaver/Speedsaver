@@ -17,6 +17,7 @@ endef
 define ARDUIPI_OLED_INSTALL_TARGET_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) install PREFIX=/usr DESTDIR=$(TARGET_DIR) -C $(@D)/examples
 	$(TARGET_MAKE_ENV) $(MAKE) install PREFIX=/usr DESTDIR=$(TARGET_DIR) -C $(@D)
+	rm -r $(TARGET_DIR)/usr/include
 endef
 
 define ARDUIPI_OLED_INSTALL_STAGING_CMDS
