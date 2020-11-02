@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-ARDUIPI_OLED_VERSION = 20dd673e4ff37a56e155b9e5f77e2aae79f9d11d
+ARDUIPI_OLED_VERSION = 7d9e4fbf891ca0a6c5ca272885b6efd0663e19f4
 ARDUIPI_OLED_SITE = $(call github,Jookia,ArduiPi_OLED,$(ARDUIPI_OLED_VERSION))
 ARDUIPI_OLED_DEPENDENCIES = i2c-tools
 ARDUIPI_OLED_INSTALL_STAGING = YES
