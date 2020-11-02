@@ -25,6 +25,7 @@ config BR2_PACKAGE_NAVIT_QT5
 config BR2_PACKAGE_NAVIT_SPEEDSAVER
 	bool "enable the speedsaver build"
 	select BR2_PACKAGE_ARDUIPI_OLED
+	select BR2_PACKAGE_LIBGLIB2
 	help
 	  Enable the speedsaver build
 

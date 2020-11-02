@@ -30,7 +30,7 @@ ifeq ($(BR2_PACKAGE_NAVIT_SPEEDSAVER),y)
 NAVIT_VERSION = ade93f9ffee9277b274e1f4951b9f0fb733d1a23
 # NAVIT_VERSION = ssd1306
 NAVIT_SITE = git://github.com/speedsaver/navit
-NAVIT_DEPENDENCIES += arduipi-oled
+NAVIT_DEPENDENCIES += arduipi-oled libglib2
 NAVIT_CONF_OPTS += -Dspeech/cmdline=0 -Dmap/textfile=0 -Dgui/internal=0 -DUSE_NATIVE_LANGUAGE_SUPPORT=0
 endif
 
