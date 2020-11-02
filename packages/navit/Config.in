@@ -1,6 +1,5 @@
 config BR2_PACKAGE_NAVIT
 	bool "navit"
-	depends on BR2_PACKAGE_GLIBC
 	help
 	  The OpenSource vector based navigation software
 
