@@ -1,0 +1,13 @@
+diff --git a/navit/graphics/ssd1306/graphics_ssd1306.cpp b/navit/graphics/ssd1306/graphics_ssd1306.cpp
+index 790a90816..87cab3e92 100644
+--- a/navit/graphics/ssd1306/graphics_ssd1306.cpp
++++ b/navit/graphics/ssd1306/graphics_ssd1306.cpp
+@@ -306,7 +306,7 @@ graphics_ssd1306_idle(void *data)
+ 		display.display();
+ 	}
+ 	g_timeout_add(10, graphics_ssd1306_idle, data);
+-
++	return G_SOURCE_REMOVE;
+ }
+ 
+ 

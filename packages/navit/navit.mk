@@ -30,7 +30,7 @@ ifeq ($(BR2_PACKAGE_NAVIT_SPEEDSAVER),y)
 NAVIT_VERSION = ade93f9ffee9277b274e1f4951b9f0fb733d1a23
 # NAVIT_VERSION = ssd1306
 NAVIT_SITE = git://github.com/speedsaver/navit
-NAVIT_DEPENDENCIES += ssd1306
+NAVIT_DEPENDENCIES += arduipi-oled libglib2
 NAVIT_CONF_OPTS += -Dspeech/cmdline=0 -Dmap/textfile=0 -Dgui/internal=0 -DUSE_NATIVE_LANGUAGE_SUPPORT=0
 endif
 
@@ -40,7 +40,7 @@ NAVIT_DEPENDENCIES += alsa-lib libspotify
 NAVIT_CONF_OPTS += -DUSE_AUDIO_FRAMEWORK=1
 endif
 
-ifeq ($(BR2_PACKAGE_NAVIT_GPSD_VEHICLE),y)
+ifeq ($(BR2_PACKAGE_NAVIT_VEHICLE_GPSD),y)
 NAVIT_DEPENDENCIES += gpsd
 NAVIT_CONF_OPTS += -Dvehicle/gpsd=1
 endif

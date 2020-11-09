@@ -1,5 +1,0 @@
-config BR2_PACKAGE_SSD1306
-	bool "ssd1306"
-	depends on BR2_TOOLCHAIN_BUILDROOT_CXX
-	help
-	  Hallard's SSD 1306
