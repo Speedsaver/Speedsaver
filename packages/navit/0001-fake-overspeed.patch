@@ -1,0 +1,15 @@
+diff --git a/navit/graphics/ssd1306/graphics_ssd1306.cpp b/navit/graphics/ssd1306/graphics_ssd1306.cpp
+index eff288f7..102785a6 100644
+--- a/navit/graphics/ssd1306/graphics_ssd1306.cpp
++++ b/navit/graphics/ssd1306/graphics_ssd1306.cpp
+@@ -193,6 +193,10 @@ graphics_ssd1306_idle(void *data)
+ 			struct attr maxspeed_attr;
+ 			int osm_data = 0;
+ 			tracking = navit_get_tracking(ssd1306->nav);
++                        if (getenv("GOTTA_GO_FAST")) {
++                          routespeed = 50;
++                          speed = 88;
++                        }
+ 
+ 			if (tracking) {
+ 				struct item *item;
