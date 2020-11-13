@@ -26,10 +26,8 @@ NAVIT_CONF_OPTS += -DDISABLE_QT=1 -Dgraphics/qt5=0 -Dvehicle/qt5=0
 endif
 
 ifeq ($(BR2_PACKAGE_NAVIT_SPEEDSAVER),y)
-# Last working build:
-NAVIT_VERSION = ade93f9ffee9277b274e1f4951b9f0fb733d1a23
-# NAVIT_VERSION = ssd1306
-NAVIT_SITE = git://github.com/speedsaver/navit
+NAVIT_VERSION = d9d594fa17a866307d27f6981e2c1d55b2e3876e
+NAVIT_SITE = git://github.com/Jookia/navit
 NAVIT_DEPENDENCIES += arduipi-oled libglib2
 NAVIT_CONF_OPTS += -Dspeech/cmdline=0 -Dmap/textfile=0 -Dgui/internal=0 -DUSE_NATIVE_LANGUAGE_SUPPORT=0
 endif
