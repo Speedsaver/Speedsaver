@@ -6,6 +6,7 @@ ConditionPathExists=!/var/lib/alsa/asound.state
 Type=oneshot
 ExecStart=/usr/bin/amixer sset "Line Out" on
 ExecStart=/usr/bin/amixer sset "Line Out" 50%
+ExecStart=/usr/bin/amixer sset  "Line Out Source" "Mono Differential"
 ExecStart=/usr/bin/amixer sset "DAC" on
 ExecStart=/sbin/alsactl store
 
