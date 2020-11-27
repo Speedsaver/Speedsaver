@@ -13,6 +13,7 @@ Add the navit maps (already in .bin format) to this directory inside the externa
 Then run the following commands in the buildroot toplevel directory:
 
 ```
+for p in /path/to/speedsaver/external/tree/buildroot-patches/*.patch; do patch -p1 < $p; done
 make BR2_EXTERNAL=/path/to/speedsaver/external/tree O=output/speedsaver speedsaver_defconfig
 cd output/speedsaver
 make
