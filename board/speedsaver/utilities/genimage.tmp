@@ -11,6 +11,14 @@ image boot.vfat {
 	size = 10M
 }
 
+image data.vfat {
+	vfat {
+		label = "DATA"
+	}
+	empty = "true"
+	size = 110M
+}
+
 image sdcard.img {
 	hdimage {
 	}
@@ -20,6 +28,11 @@ image sdcard.img {
 		image = "u-boot-sunxi-with-spl.bin"
 		offset = 8192
 		size = 1040384 # 1MB - 8192
+	}
+
+	partition data {
+		partition-type = 0xC
+		image = "data.vfat"
 	}
 
 	partition boot {
