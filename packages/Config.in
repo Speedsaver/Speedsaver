@@ -2,6 +2,7 @@ menu "Target packages"
 
 source "$BR2_EXTERNAL_SPEEDSAVER_PATH/packages/arduipi-oled/Config.in"
 source "$BR2_EXTERNAL_SPEEDSAVER_PATH/packages/armbian-xr819-xradio/Config.in"
+source "$BR2_EXTERNAL_SPEEDSAVER_PATH/packages/curtail/Config.in"
 source "$BR2_EXTERNAL_SPEEDSAVER_PATH/packages/navit/Config.in"
 
 endmenu
