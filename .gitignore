@@ -1,3 +1,4 @@
 board/speedsaver/rootfs_overlay/usr/share/navit/maps
 dl
 output
+utilities/version_stamp
