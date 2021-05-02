@@ -27,7 +27,7 @@ endif
 
 ifeq ($(BR2_PACKAGE_NAVIT_SPEEDSAVER),y)
 NAVIT_VERSION = c8dbc5f63a96df3e120befa0d35707c297a1e5da
-NAVIT_SITE = git://github.com/Jookia/navit
+NAVIT_SITE = git://github.com/speedsaver/navit
 NAVIT_DEPENDENCIES += arduipi-oled libglib2
 NAVIT_CONF_OPTS += -Dspeech/cmdline=0 -Dmap/textfile=0 -Dgui/internal=0 -DUSE_NATIVE_LANGUAGE_SUPPORT=0
 endif
