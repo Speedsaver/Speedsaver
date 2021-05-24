@@ -26,7 +26,7 @@ NAVIT_CONF_OPTS += -DDISABLE_QT=1 -Dgraphics/qt5=0 -Dvehicle/qt5=0
 endif
 
 ifeq ($(BR2_PACKAGE_NAVIT_SPEEDSAVER),y)
-NAVIT_VERSION = 7b8b5064b63d1fbfeafeaa7dfe9b684fe40bfcd8
+NAVIT_VERSION = 5d22710585779224a5adb3d4d7c2d222de3a6d38
 NAVIT_SITE = git://github.com/speedsaver/navit
 NAVIT_DEPENDENCIES += arduipi-oled libglib2
 NAVIT_CONF_OPTS += -Dspeech/cmdline=0 -Dmap/textfile=0 -Dgui/internal=0 -DUSE_NATIVE_LANGUAGE_SUPPORT=0
