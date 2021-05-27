@@ -1,1 +1,2 @@
 LABEL=DATA	/data	vfat	noauto,x-systemd.automount	0	0
+/data/maps	/usr/share/navit/maps	none	bind	0	0
