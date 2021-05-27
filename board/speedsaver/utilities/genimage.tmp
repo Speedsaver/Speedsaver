@@ -16,7 +16,7 @@ image data.vfat {
 		label = "DATA"
 	}
 	empty = "true"
-	size = 512M
+	size = 2G
 }
 
 image sdcard-${GENIMAGE_BUILD_ID}.img {
@@ -44,6 +44,6 @@ image sdcard-${GENIMAGE_BUILD_ID}.img {
 	partition rootfs {
 		partition-type = 0x83
 		image = "rootfs.ext4"
-size = 256M
+size = 1G
 	}
 }
