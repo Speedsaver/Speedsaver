@@ -8,3 +8,7 @@ ln -srf "${TARGET_DIR}"/run/systemd/resolve/stub-resolv.conf \
 
 cp "${BR2_EXTERNAL_SPEEDSAVER_PATH}"/utilities/version_stamp \
 	"${TARGET_DIR}"/etc/version_stamp
+
+# create empty maps directory for navit
+
+mkdir -p "${TARGET_DIR}"/usr/share/navit/maps
