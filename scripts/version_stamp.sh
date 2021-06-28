@@ -6,4 +6,5 @@
 
 set -e
 cd "${BR2_EXTERNAL_SPEEDSAVER_PATH}"
-git describe --broken --dirty > utilities/version_stamp
+SPEEDSAVER_VERSION=$(git describe --broken --dirty)
+echo "Speedsaver version "${SPEEDSAVER_VERSION}" on buildroot "${BR2_VERSION}"" > utilities/version_stamp
