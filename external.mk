@@ -1,6 +1,2 @@
 include $(sort $(wildcard $(BR2_EXTERNAL_SPEEDSAVER_PATH)/packages/*/*.mk))
-
-version-stamp:
-	$(BR2_EXTERNAL_SPEEDSAVER_PATH)/scripts/version_stamp.sh
-
-world: version-stamp
+export SPEEDSAVER_VERSION=$(shell GIT_DIR=$(BR2_EXTERNAL_SPEEDSAVER_PATH)/.git git describe --broken --dirty)
