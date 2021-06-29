@@ -6,7 +6,7 @@ set -e
 cd "${BINARIES_DIR}"
 export GENIMAGE_TMP=${BR2_EXTERNAL_SPEEDSAVER_PATH}/board/speedsaver/utilities/genimage.tmp
 GENIMAGE_CFG="${BR2_EXTERNAL_SPEEDSAVER_PATH}/board/speedsaver/utilities/genimage.cfg"
-export GENIMAGE_BUILD_ID=$(cat "${BR2_EXTERNAL_SPEEDSAVER_PATH}"/utilities/version_stamp)
+export GENIMAGE_BUILD_ID=$(echo "${SPEEDSAVER_VERSION}")
 
 envsubst \
 \$GENIMAGE_BUILD_ID \
