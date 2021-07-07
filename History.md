@@ -1,4 +1,35 @@
 
+2021-07-07 / 2021-07-07
+=======================
+
+  * packages/navit: bump to commit 7b9aa02b1e68928da0659701141294aa1dda39d1.
+  * board/speedsaver: make the generated version stamp file shorter so that it displays properly.
+  * board/speedsaver: use lower volume startup sound.
+  * Global: set the GIT_WORK_TREE environment variable.
+  * board/speedsaver: reimplement version stamping using the new method.
+  * global: reworked version stamping.
+  * Global: tweak version stamping script to display buildroot version alongside the speedsaver one.
+  * board/speedsaver: added startup sound and service.
+  * board/speedsaver: bump kernel version to 5.12.12.
+  * packages/Config.in: restructure this kconfig file a bit.
+  * packages/armbian-xr819-xradio: removed package.
+  * packages/arduipi_oled: fixed hash
+  * packages/arduipi_oled: updated build commit IDs
+  * packages/{arduipi_oled, navit}: change URL for repositories.
+  * board/speedsaver: fix typo in triggerhappy systemd override.
+  * board/speedsaver: generate a tarball of the rootfs.
+  * board/speedsaver: add gdbserver into the target.
+  * board/speedsaver: add a drop-in for triggerhappy to have access to amixer.
+  * board/speedsaver: set line out volume to 100% in amixer.service.
+  * board/speedsaver: added micropython.
+  * Global: added an utilities directory to contain scripts generated data or configs, if global.
+  * board/speedsaver: added version stamping information into the target.
+  * Added changelog.
+  * board/speedsaver: alter genimage and config to use version stamping.
+  * Implement version stamping.
+  * board/speedsaver: added triggerhappy configuration and select package.
+  * board/speedsaver: underclock cpu and ram in u-boot.
+
 2021-01-07 / 2021-01-07
 =======================
 
