@@ -1,4 +1,12 @@
 
+2021-11-14 / 2021-11-14
+=======================
+
+  * board/speedsaver: added ttyS1 to gpsd configuration.
+  * packages/navit: bump to version 81714d7ecdcc392f73c613f42d3acf0d02b5f7ad.
+  * board/speedsaver: bump to kernel 5.15.2.
+  * board/speedsaver: provide kernel patch to enable uart1.
+
 2021-07-07 / 2021-07-07
 =======================
 
