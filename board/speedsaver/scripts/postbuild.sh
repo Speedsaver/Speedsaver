@@ -8,3 +8,8 @@ ln -srf "${TARGET_DIR}"/run/systemd/resolve/stub-resolv.conf \
 
 echo "V "${SPEEDSAVER_VERSION}" on BR "${BR2_VERSION}"" \
 	> "${TARGET_DIR}"/etc/version_stamp
+
+# grab keyring needed for rauc
+
+cp "${BR2_EXTERNAL_SPEEDSAVER_PATH}"/certs/keyring.pem \
+	"${TARGET_DIR}"/etc/rauc/keyring.pem
