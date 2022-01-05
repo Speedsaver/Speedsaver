@@ -1,14 +1,12 @@
 # Minimal SD card image for the OrangePi Zero
 #
-image boot.vfat {
+image uboot.vfat {
 	vfat {
 		files = {
-			"zImage",
-			"sun8i-h2-plus-orangepi-zero.dtb",
 			"boot.scr"
 		}
 	}
-	size = 10M
+	size = 1M
 }
 
 image data.vfat {
@@ -21,12 +19,13 @@ image data.vfat {
 
 image sdcard-${GENIMAGE_BUILD_ID}.img {
 	hdimage {
+		gpt = "true"
 	}
 
 	partition u-boot {
 		in-partition-table = "no"
 		image = "u-boot-sunxi-with-spl.bin"
-		offset = 8192
+		offset = 128K
 		size = 1040384 # 1MB - 8192
 	}
 
@@ -37,12 +36,40 @@ image sdcard-${GENIMAGE_BUILD_ID}.img {
 
 	partition boot {
 		partition-type = 0xC
-		bootable = "true"
-		image = "boot.vfat"
+		image = "uboot.vfat"
 	}
 
-	partition rootfs {
+	partition PrimaryRootfs {
 		partition-type = 0x83
 		image = "rootfs.ext4"
+		bootable = "true"
+	}
+
+	partition SecondaryRootfs {
+		partition-type = 0x83
+		image = "rootfs.ext4"
+		bootable = "true"
+	}
+}
+
+image bundle-Speedsaver.${GENIMAGE_BUILD_ID}.raucb {
+	name = "bundle-Speedsaver-${GENIMAGE_BUILD_ID}"
+	rauc {
+		files = {
+			"uboot.vfat",
+			"rootfs.tar.xz"
+		}
+		key = "${BR2_EXTERNAL_SPEEDSAVER_PATH}/certs/signing.key"
+		cert = "${BR2_EXTERNAL_SPEEDSAVER_PATH}/certs/signing.crt"
+		extraargs = "--keyring ${BR2_EXTERNAL_SPEEDSAVER_PATH}/certs/keyring.pem"
+		manifest = 
+			"[update]
+			compatible=Speedsaver Orange Pi Zero
+			version=${GENIMAGE_BUILD_ID}
+			description=RAUC bundle for Speedsaver Orange Pi Zero version ${GENIMAGE_BUILD_ID}, built by ${GENIMAGE_USER}@${GENIMAGE_HOST}.
+			[image.uboot]
+			filename=uboot.vfat
+			[image.rootfs]
+			filename=rootfs.tar.xz"
 	}
 }
