@@ -1,4 +1,7 @@
 board/speedsaver/rootfs_overlay/usr/share/navit/maps
 board/speedsaver/utilities/genimage.cfg
+scripts/certs.sh
+certs
+easy-rsa
 dl
 output
