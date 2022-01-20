@@ -40,13 +40,11 @@ image sdcard-${GENIMAGE_BUILD_ID}.img {
 	}
 
 	partition PrimaryRootfs {
-		partition-type = 0x83
 		image = "rootfs.ext4"
 		bootable = "true"
 	}
 
 	partition SecondaryRootfs {
-		partition-type = 0x83
 		image = "rootfs.ext4"
 		bootable = "true"
 	}
