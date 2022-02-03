@@ -1,4 +1,13 @@
 
+2022-02-03 / 2022-02-03
+=======================
+
+  * board/speedsaver: bump kernel to 5.16.5.
+  * board/speedsaver: pass -n option to gpsd to allow chrony to use the devices.
+  * board/speedsaver: enabled chrony and provided appropriate configuration to use with gps time should ntp time not be available.
+  * board/speedsaver: enabled strace.
+  * board/speedsaver: enabled minimal requirement needed for strace in kernel config.
+
 2021-11-14 / 2021-11-14
 =======================
 
