@@ -1,4 +1,13 @@
 
+2022-04-15 / 2022-04-15
+=======================
+
+  * board/speedsaver: Set DAC volume to 100%.
+  * package/navit: replace website call with the buildroot github macro.
+  * package/navit: replace use of git protocol in speedsaver build with https.
+  * board/speedsaver: bump kernel to 5.17.3.
+  * board/speedsaver: bump to buildroot 2022.02.
+
 2022-03-02 / 2022-03-02
 =======================
 
