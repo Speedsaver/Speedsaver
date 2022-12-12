@@ -1,4 +1,20 @@
 
+2022-12-12 / 2022-12-12
+=======================
+
+  * Merge branch 'master' of https://github.com/Speedsaver/Speedsaver
+  * board/speedsaver: bump kernel to 6.0.12
+  * Update README.md
+  * Bump navit
+  * Bump navit
+  * Bump navit
+  * Bump navit
+  * Bump navit
+  * Update Navit to simplified version
+  * Remove arduipi-oled.hash, git already uses a hash
+  * Bump arduipi-oled
+  * Update README.md
+
 2022-11-21 / 2022-11-21
 =======================
 
