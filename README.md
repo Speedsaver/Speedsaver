@@ -3,9 +3,9 @@
 This is the buildroot external tree for the speedsaver build.
 
 Note if you are new to Buildroot, see prerequisites: https://buildroot.org/downloads/manual/manual.html#requirement-mandatory. Tested with vanilla Lubuntu 22.04.1 LTS, only the following was needed:
-
+```
 sudo apt install make gcc build-essential libncurses5-dev libssl-dev
-
+```
 libncurses5-dev is in place of ncurses5
 
 This is based on the orange pi zero board from xunlong.
@@ -20,8 +20,14 @@ Then run the following commands in the buildroot toplevel directory:
 
 ```
 for p in /path/to/speedsaver/external/tree/buildroot-patches/*.patch; do patch -p1 < $p; done
+```
+```
 make BR2_EXTERNAL=/path/to/speedsaver/external/tree O=output/speedsaver speedsaver_defconfig
+```
+```
 cd output/speedsaver
+```
+```
 make
 ```
 
