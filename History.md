@@ -1,4 +1,10 @@
 
+yyyy-mm-dd / 2023-05-02
+=======================
+
+  * 	modified:   configs/speedsaver_defconfig
+  * Update README.md
+
 2023-03-29 / 2023-03-30
 =======================
 
