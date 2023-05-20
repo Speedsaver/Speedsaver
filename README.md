@@ -12,7 +12,7 @@ This is based on the orange pi zero board from xunlong.
 
 ## How to build ##
 
-Download either a tarball of the latest buildroot release (tested with Buildroot 2022.11 using stable kernel 6.1.7 (6.2.8 was tested but found to break USB Gadget Serial) at the time of this writing), and extract it, or git  clone.
+Download either a tarball of the latest buildroot release (tested with Buildroot 2023.02.1 using stable kernel 6.3.3 at the time of this writing), and extract it, or git  clone.
 Next, clone the external tree repository, either inside the buildroot directory or outside of it.
 Add the navit maps (already in .bin format) to this directory inside the external tree: board/speedsaver/rootfs_overlay/usr/share/navit. The directory containing the maps must be called 'maps', and be obtained from somewhere else, as this repository doesn't provide them.
 
